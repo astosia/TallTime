@@ -62,7 +62,7 @@ typedef struct ClaySettings {
   char icon1hstring[4];
   char windiconnowstring[4];
   char windiconavestring[4];
-  char templowstring[6];
+  char templowstring[10];
   char temphistring[10];
   char rainstring[10];
   char popstring[6];

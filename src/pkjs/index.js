@@ -1225,8 +1225,8 @@ function locationSuccessOWM(pos){
     var forecast_low_tempf = Math.round((json.daily[0].temp.min* 1.8) - 459.67);        //+'\xB0';
     var forecast_high_tempc = Math.round(json.daily[0].temp.max - 273.15);              //+ '\xB0';
     var forecast_low_tempc = Math.round(json.daily[0].temp.min - 273.15);              //+ '\xB0';
-    var highowm = String(temptousewu(units,forecast_high_tempf,forecast_high_tempc));
-    var lowowm = String(temptousewu(units,forecast_low_tempf,forecast_low_tempc));
+    var highowm = String(temptousewu(units,forecast_high_tempf,forecast_high_tempc))+'\xB0';
+    var lowowm = String(temptousewu(units,forecast_low_tempf,forecast_low_tempc))+'\xB0';
     var highlowowm = highowm + '|'+ lowowm+'\xB0';
     var forecast_ave_wind_mph = Math.round(json.daily[0].wind_speed*2.2369362920544);
     var forecast_ave_wind_kts = Math.round(json.daily[0].wind_speed *1.9438444924574);
@@ -1387,7 +1387,7 @@ function locationSuccessOWM(pos){
       "WEATHER_SUNRISE_KEY_12H":sunriseStr12h,
       "IconNow":icon_owm,
       "IconFore":forecast_icon_owm,
-      "TempFore": highlowowm,//hi_low,
+      "TempFore": highowm,//hi,
       "TempForeLow": lowowm,
       "WindFore": forecast_ave_wind_owm,
       "WindForeRound" : forecast_ave_wind_owm_round,
