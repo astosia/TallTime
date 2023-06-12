@@ -2,40 +2,129 @@
     "author": "astosia",
     "dependencies": {
         "pebble-clay": "^1.0.4",
-        "pebble-fctx": "^1.6.2",
+        "pebble-fctx": "^1.6.0",
         "pebble-fctx-compiler": "^1.2.2"
     },
     "keywords": [],
-    "name": "Alienwear",
+    "name": "TallTime",
     "pebble": {
         "capabilities": [
-            "configurable"
+            "location",
+            "configurable",
+            "health"
         ],
-        "displayName": "Alienwear",
+        "displayName": "TallTime",
         "enableMultiJS": true,
         "messageKeys": [
             "Back1Color",
-            "ALIEN",
+            "Back1ColorN",
+            "Back2Color",
+            "Back2ColorN",
+            "FrameColor2",
+            "FrameColor2N",
+            "FrameColor",
+            "FrameColorN",
             "Text1Color",
+            "Text1ColorN",
             "Text2Color",
-            "HourColor",
-            "MinColor",
-            "bluetoothvibe",
-            "Text3Color",
-            "Text4Color",
-            "Text5Color",
-            "FrameColor1",
-            "Text6Color",
-            "WeatherUnit",
-            "WeatherProv",
+            "Text2ColorN",
+            "FrameColor",
+            "FrameColorN",
+            "WeatherCond",
+            "WeatherTemp",
+            "HourSunrise",
+            "HourSunset",
+            "Cond1h",
+            "rain1h",
+            "raintime24h",
+            "raintime12h",
+            "pop1h",
+            "HealthOff",
+            "VibeOn",
+            "AddZero12h",
+            "RemoveZero24h",
+            "NameLocation",
             "UpSlider",
+            "Rainmultiplier",
+            "NightTheme",
             "APIKEY_User",
+            "WeatherUnit",
+            "Weathertime",
+            "Weathertimecapture",
+            "WeatherProv",
+            "EmailPMKEY",
             "PINPMKEY",
+            "HourColor",
+            "HourColorN",
+            "MinColor",
+            "MinColorN",
+            "DateColor",
+            "DateColorN",
+            "WeatherWind",
+            "WeatherWindRound",
+            "bluetoothvibe",
+            "WEATHER_SUNSET_KEY",
+            "WEATHER_SUNSET_KEY_12H",
+            "WEATHER_SUNRISE_KEY_12H",
+            "Text3Color",
+            "Text3ColorN",
+            "Text7Color",
+            "Text7ColorN",
+            "Text8Color",
+            "Text8ColorN",
+            "Text9Color",
+            "Text9ColorN",
+            "Text10Color",
+            "Text10ColorN",
             "IconNow",
             "IconFore",
             "TempFore",
-            "WeatherTemp",
-            "CurrentOrFore"
+            "WindFore",
+            "WindForeRound",
+            "TempForeLow",
+            "Text4Color",
+            "Text4ColorN",
+            "WindIconNow",
+            "WindIconAve",
+            "Text5Color",
+            "Text5ColorN",
+            "WindUnit",
+            "RightLeft",
+            "Rotate",
+            "MoonPhase",
+            "WEATHER_SUNRISE_KEY",
+            "Lat",
+            "Long",
+            "FontChoice",
+            "FrameColor2",
+            "FrameColor2N",
+            "Text6Color",
+            "Text6ColorN",
+            "WeatherTempPWS",
+            "WeatherWindPWS",
+            "WeatherWindRoundPWS",
+            "WindIconNowPWS",
+            "PWSAPIKEY_User",
+            "PWSStationID_User",
+            "UsePWS",
+            "RainTotalTodayPWS",
+            "RainRatePWS",
+            "PressurePWS",
+            "PressureUnit",
+            "RainUnit",
+            "rain0",
+            "rain5",
+            "rain10",
+            "rain15",
+            "rain20",
+            "rain25",
+            "rain30",
+            "rain35",
+            "rain40",
+            "rain45",
+            "rain50",
+            "rain55",
+            "rain60"
         ],
         "projectType": "native",
         "resources": {
@@ -47,64 +136,79 @@
                     "type": "raw"
                 },
                 {
+                    "file": "data/EretCompressed.ffont",
+                    "name": "FFONT_ERETCOM",
+                    "targetPlatforms": null,
+                    "type": "raw"
+                },
+                {
+                    "file": "data/EretRegular.ffont",
+                    "name": "FFONT_ERETRG",
+                    "targetPlatforms": null,
+                    "type": "raw"
+                },
+                {
+                    "file": "fonts/EretModified.ttf",
+                    "name": "ERET_36",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
                     "file": "fonts/Dripicons",
+                    "characterRegex": "[z]",
                     "name": "FONT_DRIPICONS_16",
                     "targetPlatforms": null,
                     "type": "font"
                 },
                 {
-                    "file": "images/alien1clear.png",
-                    "name": "IMAGE_ALIENHEAD",
-                    "type": "png"
+                    "file": "fonts/Weathericons",
+                    "characterRegex": "[]",
+                    "name": "FONT_WEATHERICONS_16",
+                    "targetPlatforms": null,
+                    "type": "font"
                 },
                 {
-                    "file": "images/alien1clearblue.png",
-                    "name": "IMAGE_ALIENBLUE",
-                    "type": "png"
+                    "file": "fonts/Weathericons",
+                    "name": "FONT_WEATHERICONS_32",
+                    "targetPlatforms": null,
+                    "type": "font"
                 },
                 {
-                    "file": "images/alien1rain.png",
-                    "name": "IMAGE_ALIENRAIN",
-                    "type": "png"
+                    "file": "fonts/Johnston100",
+                    "name": "FONT_LIZ_27",
+                    "targetPlatforms": null,
+                    "type": "font"
                 },
                 {
-                    "file": "images/alien1rainblue.png",
-                    "name": "IMAGE_ALIENRAINBLUE",
-                    "type": "png"
+                    "file": "fonts/Johnston100",
+                    "name": "FONT_LIZ_18",
+                    "targetPlatforms": null,
+                    "type": "font"
                 },
                 {
-                    "file": "images/alien1snow.png",
-                    "name": "IMAGE_ALIENSNOW",
-                    "type": "png"
+                    "file": "fonts/Johnston100",
+                    "name": "FONT_LIZ_12",
+                    "targetPlatforms": null,
+                    "type": "font"
                 },
                 {
-                    "file": "images/alien1snowblue.png",
-                    "name": "IMAGE_ALIENSNOWBLUE",
-                    "type": "png"
-                },
-                {
-                    "file": "images/alien1cloud.png",
-                    "name": "IMAGE_ALIENCLOUD",
-                    "type": "png"
-                },
-                {
-                    "file": "images/alien1cloudblue.png",
-                    "name": "IMAGE_ALIENCLOUDBLUE",
-                    "type": "png"
+                    "file": "data/Johnston100W03-numbers.ffont",
+                    "name": "FONT_LIZ",
+                    "targetPlatforms": null,
+                    "type": "raw"
                 }
             ]
         },
         "sdkVersion": "3",
         "targetPlatforms": [
-            "aplite",
             "basalt",
             "chalk",
             "diorite"
         ],
-        "uuid": "bfc03c0d-2dc6-4467-8f03-0b76224f50b7",
+        "uuid": "91a049b9-0532-4f64-9a75-cd75f61c96a6",
         "watchapp": {
             "watchface": true
         }
     },
-    "version": "1.5.0"
+    "version": "1.6.0"
 }

@@ -6,91 +6,156 @@ module.exports = [
   },
   {
   "type": "heading",
-  "defaultValue": "Weather will not show unless a weather provider is selected and set up.",
-  "size":6
-  },
-  {
-  "type": "heading",
-  "defaultValue": "Set complications to the same colour as the background to hide them.",
+  "defaultValue": "Weather will not show unless a weather provider is selected and set up. Set complications to the same colour as the background to hide them.",
   "size":6
   },
   {
     "type": "section",
     "items": [
       {
-        "type": "heading",
-        "defaultValue": "Theme settings"
+        "type": "toggle",
+        "messageKey": "HealthOff",
+        "label": "Switch off Steps",
+        "defaultValue": true,
+        "capabilities":["HEALTH"]
       },
       {
         "type": "toggle",
-        "messageKey": "ALIEN",
-        "defaultValue": false,
-        "label": "Light/Dark Alien Theme"
-      /*  "options": [
-          {
-            "label": "White",
-            "value": "w"
-          },
-          {
-            "label": "Blue and Black",
-            "value": "b"
-          }
-        ]*/
+        "messageKey": "VibeOn",
+        "label": "Switch on vibrate on Bluetooth disconnect during Quiet Time",
+        "defaultValue": false
       },
-    /*  {
+      {
+        "type": "heading",
+        "defaultValue": "Time Section",
+        "size":4
+      },
+      {
         "type": "color",
-        "messageKey": "Back1Color",
+        "messageKey": "FrameColor2",
         "defaultValue": "0x000000",
-        "label": "Background Colour"
-      },*/
-
+        "label": "Background Colour",
+        "allowGray":true
+      },
+      {
+        "type": "toggle",
+        "messageKey": "AddZero12h",
+        "label": "Add leading zero to 12h time",
+        "defaultValue": false
+      },
+      {
+        "type": "toggle",
+        "messageKey": "RemoveZero24h",
+        "label": "Remove leading zero from 24h time",
+        "defaultValue": false
+      },
       {
         "type": "color",
         "messageKey": "HourColor",
-        "defaultValue": "0x000000",
-        "label": "Time Colour",
+        "defaultValue": "0xFFFFFF",
+        "label": "Hour Colour",
+        "allowGray":true
+      },
+      {
+        "type": "color",
+        "messageKey": "MinColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "Minute Colour",
+        "allowGray":true
+      },
+      {
+        "type": "color",
+        "messageKey": "DateColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "Date Colour",
         "allowGray":true
       },
       {
         "type": "color",
         "messageKey": "Text3Color",
-        "defaultValue": "0x000000",
-        "label": "Date & Temperature Colour",
+        "defaultValue": "0xFFFFFF",
+        "label": "Day of the Week Colour",
         "allowGray":true
-      },
-/*      {
-        "type": "color",
-        "messageKey": "Text5Color",
-        "defaultValue": "0x000000",
-        "label": "Month Colour"
       },
       {
         "type": "color",
         "messageKey": "Text6Color",
-        "defaultValue": "0x000000",
-        "label": "Date Text Colour"
-      },*/
+        "defaultValue": "0xFFFFFF",
+        "label": "Battery Bar Colour",
+        "allowGray":true
+      },
+      {
+        "type": "heading",
+        "defaultValue": "Complications Section",
+        "size":4
+      },
       {
         "type": "color",
-        "messageKey": "FrameColor1",
+        "messageKey": "FrameColor",
+        "defaultValue": "0x000000",
+        "label": "Background Colour",
+        "allowGray":true
+      },
+      {
+        "type": "color",
+        "messageKey": "Text7Color",
         "defaultValue": "0xFFFFFF",
-        "label": "Divider Bar Colour",
+        "label": "Weather icon & Rain Graph Colour",
+        "allowGray":true
+      },
+      {
+        "type": "color",
+        "messageKey": "Text8Color",
+        "defaultValue": "0xFFFFFF",
+        "label": "Temperature & Rain Colour",
+        "allowGray":true
+      },
+      {
+        "type": "color",
+        "messageKey": "Text9Color",
+        "defaultValue": "0xFFFFFF",
+        "label": "Wind Speed Colour",
+        "allowGray":true
+      },
+      {
+        "type": "color",
+        "messageKey": "Text10Color",
+        "defaultValue": "0xFFFFFF",
+        "label": "Wind Direction Colour",
+        "allowGray":true
+      },
+      {
+        "type": "color",
+        "messageKey": "Text5Color",
+        "defaultValue": "0xFFFFFF",
+        "label": "BT & QT Colour",
         "allowGray":true
       },
        {
         "type": "color",
         "messageKey": "Text2Color",
-        "defaultValue": "0x000000",
-        "label": "Battery Bar Colour",
+        "defaultValue": "0xFFFFFF",
+        "label": "Sunrise & Sunset Colour",
         "allowGray":true
       },
       {
         "type": "color",
-        "messageKey": "Text4Color",
-        "defaultValue": "0x000000",
-        "label": "Quiet Time & BT icon colour"
+        "messageKey": "Text1Color",
+        "defaultValue": "0xFFFFFF",
+        "label": "Steps Colour",
+        "allowGray":true,
+        "capabilities":["HEALTH"]
       },
-       {
+      {
+        "type":"color",
+        "messageKey":"Text4Color",
+        "defaultValue":"0xFFFFFF",
+        "label":"Moon Colour",
+        "allowGray":true
+      },
+    ]
+  },
+      {
         "type": "section",
         "items": [
               {
@@ -109,18 +174,60 @@ module.exports = [
               },
               {
                 "type": "toggle",
-                "messageKey": "CurrentOrFore",
-                "label": "Current/Forecast conditions picture",
-                "description": "Shows weather images based on either current (toggle is off) or forecast (toggle is on) conditions",
+                "messageKey": "WeatherUnit",
+                "label": "Temperature in Fahrenheit",
                 "defaultValue": false,
+              },
+                {
+                "type": "select",
+                "messageKey": "WindUnit",
+                "label": "Wind speed unit to display",
+                "defaultValue": "knots",
+                   "options": [
+                  {
+                    "label": "knots",
+                    "value": "kts"
+                  },
+                  {
+                    "label": "miles per hour",
+                    "value": "mph"
+                  },
+                     {
+                    "label": "metres per second",
+                    "value": "ms"
+                  },
+                  {
+                    "label": "kilometres per hour",
+                    "value": "kph"
+                  }
+                ]
               },
               {
-                "type": "toggle",
-                "messageKey": "WeatherUnit",
-                "label": "Temperature in Celcius/Fahrenheit",
-                "description": "toggle off for C, on for F",
-                "defaultValue": false,
-              },
+              "type": "select",
+              "messageKey": "RainUnit",
+              "label": "Rain quantity unit to display",
+              "defaultValue": "mm",
+                 "options": [
+                {
+                  "label": "millimeters | mm/h",
+                  "value": "mm"
+                },
+                {
+                  "label": "inches | in/h",
+                  "value": "in"
+                }
+              ]
+            },
+            {
+              "type": "slider",
+              "messageKey": "Rainmultiplier",
+              "defaultValue": 3,
+              "label": "Rain bar length (relative)",
+              "description": "Increase or decrease the size of the rain bars",
+              "min": 1,
+              "max": 10,
+              "step": 1
+            },
               {
                 "type": "select",
                 "messageKey": "WeatherProv",
@@ -130,10 +237,6 @@ module.exports = [
                   {
                     "label": "OpenWeatherMap",
                     "value": "owm"
-                  },
-                  {
-                    "label": "DarkSky",
-                    "value": "ds"
                   }
                 ]
               },
@@ -151,7 +254,7 @@ module.exports = [
                   "messageKey": "Long",
                   "defaultValue": "",
                   "label": "Manual Location - Longitude",
-                  "description": "Leave both blank to use GPS location for weather. You can use <a href =https://www.google.com/maps>Google Maps</a> or <a href =https://www.openstreetmap.org/>OpenStreetMap</a> to find latitude & longitude.",
+                  "description": "Leave both blank to use GPS location for sunrise & sunset times and weather. You can use <a href =https://www.google.com/maps>Google Maps</a> or <a href =https://www.openstreetmap.org/>OpenStreetMap</a> to find latitude & longitude.",
                   "attributes": {
                     "placeholder": "eg: -0.0989"
                   }
@@ -188,20 +291,86 @@ module.exports = [
               },
             ]
               },
-          {
-          "type": "submit",
-          "defaultValue":"SAVE"
-          },
-          {
-          "type": "heading",
-          "defaultValue": "version v1.3",
-          "size":6
-          },
-          {
-          "type": "heading",
-          "defaultValue": "Made in UK",
-          "size":6
-          }
-       ]
-      },
-      ];
+              {
+                "type": "section",
+                "items": [
+                  {
+                    "type": "heading",
+                    "defaultValue": "Personal Weather Station settings",
+                    "capabilities":["MICROPHONE"]
+                  },
+                  {
+                    "type": "toggle",
+                    "messageKey": "UsePWS",
+                    "label": "Show Personal Weather Station data.",
+                    "defaultValue": false,
+                    "capabilities":["MICROPHONE"]
+                  },
+                  {
+                  "type": "select",
+                  "messageKey": "PressureUnit",
+                  "capabilities":["MICROPHONE"],
+                  "label": "Barometric Pressure Unit",
+                  "defaultValue": "mb",
+                     "options": [
+                    {
+                      "label": "millibars (mb)",
+                      "value": "mb"
+                    },
+                    {
+                      "label": "inches of Mercury (Hg)",
+                      "value": "hg"
+                    },
+                    {
+                      "label": "millimeters of Mercury (mmHg)",
+                      "value": "tor"
+                    },
+                    {
+                      "label": "Pascals (P)",
+                      "value": "ap"
+                    },
+                    {
+                      "label": "standard atmospheric (atm)",
+                      "value": "atm"
+                    }
+                    ]
+                  },
+                  {
+                     "type": "input",
+                     "messageKey": "PWSAPIKEY_User",
+                     "defaultValue": "",
+                     "label": "Personal Weather Station API Key",
+                     "description": "Use this to access your Personal Weather Station data via Weather Underground/The Weather Company. If left blank, the watch will attempt to request the Weather Underground API from your pmkey.xyz",
+                     "attributes": {
+                       "placeholder": "Paste PWS API Key, or blank if using pmkey"
+                     },
+                     "capabilities":["MICROPHONE"]
+                   },
+                   {
+                      "type": "input",
+                      "messageKey": "PWSStationID_User",
+                      "defaultValue": "",
+                      "label": "Personal Weather Station ID",
+                      "description": "Enter your Personal Weather Station Station ID",
+                      "attributes": {
+                        "placeholder": "eg: KMAHANOV10"
+                      },
+                      "capabilities":["MICROPHONE"]
+                    },
+                ]
+              },
+              {
+                "type": "submit",
+                "defaultValue":"SAVE"
+                },
+                {
+                "type": "heading",
+                "defaultValue": "version v1.0",
+                "size":6
+                },
+                {
+                "type": "heading",
+                "defaultValue": "Made in the UK",
+                "size":6
+                }
+              ];
