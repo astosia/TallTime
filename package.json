@@ -131,19 +131,13 @@
         "resources": {
             "media": [
                 {
-                    "file": "data/WeatherIcons-Regular.ffont",
-                    "name": "FFONT_WEATHER",
-                    "targetPlatforms": null,
-                    "type": "raw"
-                },
-                {
                     "file": "data/EretCompressed.ffont",
                     "name": "FFONT_ERETCOM",
                     "targetPlatforms": null,
                     "type": "raw"
                 },
                 {
-                    "file": "data/Eret.ffont",
+                    "file": "data/EretWeather.ffont",
                     "name": "FFONT_ERET",
                     "targetPlatforms": null,
                     "type": "raw"
@@ -188,5 +182,5 @@
             "watchface": true
         }
     },
-    "version": "1.6.0"
+    "version": "1.5.0"
 }

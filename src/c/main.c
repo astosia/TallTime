@@ -12,7 +12,7 @@ static GFont
 
 FFont* time_font;
 FFont* time_font_small;
-FFont* weather_font_massive;
+//FFont* weather_font_massive;
 
 char  citistring[24];
 
@@ -23,6 +23,7 @@ static Layer * s_canvas_weather_section;
 static Layer * s_canvas_bt_icon;
 static Layer * s_canvas_qt_icon;
 Layer * time_area_layer;
+Layer * weather_area_layer;
 
 //#ifdef PBL_MICROPHONE
 static Layer * s_canvas_rain;
@@ -264,6 +265,7 @@ static void accel_tap_handler(AccelAxisType axis, int32_t direction) {
   layer_mark_dirty (s_canvas_weather_section);
   layer_mark_dirty (s_canvas_rain);
   layer_mark_dirty (time_area_layer);
+  layer_mark_dirty (weather_area_layer);
 //APP_LOG(APP_LOG_LEVEL_DEBUG, "show forecast weather is %d", showWeather);
 
 }
@@ -362,6 +364,11 @@ void layer_update_proc_background (Layer * back_layer, GContext * ctx){
         }
     }
 
+void update_weather_area_layer(Layer *l, GContext* ctx) {
+  // check layer bounds
+}
+
+
 void update_time_area_layer(Layer *l, GContext* ctx) {
   // check layer bounds
   #ifdef PBL_ROUND
@@ -376,13 +383,14 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
 
   fctx_init_context(&fctx, ctx);
   fctx_set_color_bias(&fctx, 0);
-  fctx_set_fill_color(&fctx, ColorSelect(settings.HourColor, settings.HourColorN));
+
 
   if (
       (showWeather == 0 || !settings.UseOWM || (showWeather == 3 && !settings.UsePWS))
     )
 {
-  #ifdef PBL_ROUND
+  fctx_set_fill_color(&fctx, ColorSelect(settings.HourColor, settings.HourColorN));
+ #ifdef PBL_ROUND
     //int font_size = bounds.size.h * 0.55;
     int font_size = 172;
    #elif PBL_PLATFORM_APLITE
@@ -442,8 +450,92 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
 
     fctx_deinit_context(&fctx);
   }
+  else if (
+        (showWeather == 1 && settings.UseOWM)
+      )
+  {
+      #ifdef PBL_ROUND
+      //int font_size = bounds.size.h * 0.55;
+      int font_size = 81;
+     #elif PBL_PLATFORM_APLITE
+      //int font_size = bounds.size.h * 0.65;
+      int font_size = 81;
+     #else
+      int font_size = 81;
+      #endif
+      int h_adjust = 0;
+      int v_adjust = 0;
+
+        #ifdef PBL_COLOR
+          fctx_enable_aa(true);
+        #endif
+
+      // if it's a round watch, EVERYTHING CHANGES
+      #ifdef PBL_ROUND
+        v_adjust = 0;
+
+      #else
+        h_adjust = 0;
+      #endif
+
+      FPoint icon_pos;
+      fctx_set_fill_color(&fctx, ColorSelect(settings.Text7Color, settings.Text7ColorN));
+      fctx_begin_fill(&fctx);
+      fctx_set_text_em_height(&fctx, time_font_small, font_size);
+      fctx_set_color_bias(&fctx,0);
+
+      char CondToDraw[4];
+      snprintf(CondToDraw, sizeof(CondToDraw), "%s","\U0000F06B");//settings.iconnowstring);
+
+      icon_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(38, 38+7) + h_adjust);
+      icon_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(90, 90+36-7)  + v_adjust);
+
+      fctx_set_offset(&fctx, icon_pos);
+      fctx_draw_string(&fctx, CondToDraw, time_font_small, GTextAlignmentCenter, FTextAnchorTop);
+
+      fctx_end_fill(&fctx);
+
+
+        FPoint time_pos;
+        fctx_set_fill_color(&fctx, ColorSelect(settings.HourColor, settings.HourColorN));
+        fctx_begin_fill(&fctx);
+        fctx_set_text_em_height(&fctx, time_font_small, font_size);
+        fctx_set_color_bias(&fctx,0);
+
+        int hourdraw;
+        char hournow[3];
+        if (clock_is_24h_style()){
+          hourdraw=s_hours;
+          snprintf(hournow,sizeof(hournow),"%02d",hourdraw);
+          }
+        else {
+          if (s_hours==0 || s_hours==12){
+            hourdraw=12;
+          }
+          else hourdraw=s_hours%12;
+        snprintf(hournow, sizeof(hournow), "%d", hourdraw);
+         }
+
+        int mindraw;
+        mindraw = s_minutes;
+        char minnow[3];
+        snprintf(minnow, sizeof(minnow), "%02d", mindraw);
+
+        char timedraw[6];
+        snprintf(timedraw, sizeof(timedraw), "%s:%s",hournow,minnow);
+
+        time_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(90, 72) + h_adjust);
+        time_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(0-13, 0-13)  + v_adjust);
+
+        fctx_set_offset(&fctx, time_pos);
+        fctx_draw_string(&fctx, timedraw, time_font_small, GTextAlignmentCenter, FTextAnchorTop);
+        fctx_end_fill(&fctx);
+
+      fctx_deinit_context(&fctx);
+    }
   else
   {
+    fctx_set_fill_color(&fctx, ColorSelect(settings.HourColor, settings.HourColorN));
     #ifdef PBL_ROUND
       //int font_size = bounds.size.h * 0.55;
       int font_size = 81;
@@ -505,7 +597,6 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
       fctx_deinit_context(&fctx);
   }
 }
-
 
 #ifdef PBL_MICROPHONE
 static void layer_update_proc_rain (Layer * layer, GContext * ctx){
@@ -972,10 +1063,15 @@ if (showWeather == 0 || !settings.UseOWM  || (showWeather == 3 && !settings.UseP
 
 }
 else if (showWeather == 1){//show weather
-  GRect IconNowRect = //weather condition icon
+/*  GRect IconNowRect = //weather condition icon
        (PBL_IF_ROUND_ELSE(
        GRect(0-26-2, 8+91-2+2,180,32),
        GRect(0, 92, 72,80)));
+         char CondToDraw[4];
+        snprintf(CondToDraw, sizeof(CondToDraw), "%s",settings.iconnowstring);
+        graphics_context_set_text_color(ctx,ColorSelect(settings.Text7Color,settings.Text7ColorN));
+        graphics_draw_text(ctx, CondToDraw, FontWeatherIconHuge, IconNowRect, GTextOverflowModeFill, PBL_IF_ROUND_ELSE(GTextAlignmentCenter,GTextAlignmentCenter), NULL);
+*/
 
   GRect IconForeRect = //weather condition icon
         (PBL_IF_ROUND_ELSE(
@@ -1001,18 +1097,16 @@ else if (showWeather == 1){//show weather
 
       char TempForeHiToDraw[10];
       char TempForeLowToDraw[10];
-      char CondToDraw[4];
+
       char CondForeToDraw[4];
       char TempToDraw[8];
 
       snprintf(TempForeHiToDraw, sizeof(TempForeHiToDraw), "%s",settings.temphistring);
       snprintf(TempForeLowToDraw, sizeof(TempForeLowToDraw), "%s",settings.templowstring);
-      snprintf(CondToDraw, sizeof(CondToDraw), "%s",settings.iconnowstring);
+
       snprintf(TempToDraw, sizeof(TempToDraw), "%s",settings.tempstring);
       snprintf(CondForeToDraw, sizeof(CondForeToDraw), "%s",settings.iconforestring);
       //Weathericons
-      graphics_context_set_text_color(ctx,ColorSelect(settings.Text7Color,settings.Text7ColorN));
-      graphics_draw_text(ctx, CondToDraw, FontWeatherIconHuge, IconNowRect, GTextOverflowModeFill, PBL_IF_ROUND_ELSE(GTextAlignmentCenter,GTextAlignmentCenter), NULL);
 
       //weather temps
       graphics_context_set_text_color(ctx,ColorSelect(settings.Text8Color,settings.Text8ColorN));
@@ -2038,6 +2132,7 @@ settings.Text10Color = GColorFromHEX(tx10_color_t-> value -> int32);
 
   layer_mark_dirty(s_canvas_weather_section);
   layer_mark_dirty(time_area_layer);
+  layer_mark_dirty(weather_area_layer);
   layer_mark_dirty(s_canvas_rain);
   layer_mark_dirty(s_canvas_bt_icon);
   layer_mark_dirty(s_canvas_qt_icon);
@@ -2059,11 +2154,15 @@ static void window_load(Window * window){
      layer_add_child(window_layer, time_area_layer);
      layer_set_update_proc(time_area_layer, update_time_area_layer);
 
-    // #ifdef PBL_MICROPHONE
-     s_canvas_rain = layer_create(bounds4);
-           layer_set_update_proc (s_canvas_rain, layer_update_proc_rain);
-           layer_add_child(window_layer, s_canvas_rain);
-    // #endif
+   weather_area_layer = layer_create(bounds4);
+      layer_add_child(window_layer, weather_area_layer);
+      layer_set_update_proc(weather_area_layer, update_weather_area_layer);
+
+  // #ifdef PBL_MICROPHONE
+   s_canvas_rain = layer_create(bounds4);
+         layer_set_update_proc (s_canvas_rain, layer_update_proc_rain);
+         layer_add_child(window_layer, s_canvas_rain);
+  // #endif
 
 
   s_canvas_bt_icon = layer_create(bounds4);
@@ -2084,6 +2183,7 @@ static void window_unload(Window * window){
   layer_destroy (s_canvas_background);
   layer_destroy(s_canvas_weather_section);
   layer_destroy(time_area_layer);
+  layer_destroy(weather_area_layer);
  //#ifdef PBL_MICROPHONE
   layer_destroy(s_canvas_rain);
 //#endif
@@ -2093,7 +2193,7 @@ static void window_unload(Window * window){
 
   ffont_destroy(time_font);
   ffont_destroy(time_font_small);
-  ffont_destroy(weather_font_massive);
+//  ffont_destroy(weather_font_massive);
   fonts_unload_custom_font(FontDayOfTheWeekShortName);
   fonts_unload_custom_font(FontBTQTIcons);
   fonts_unload_custom_font(FontTemp);
@@ -2158,6 +2258,7 @@ static void tick_handler(struct tm * time_now, TimeUnits changed){
     layer_mark_dirty(s_canvas_background);
     layer_mark_dirty(s_canvas_weather_section);
     layer_mark_dirty(time_area_layer);
+    layer_mark_dirty(weather_area_layer);
     //#ifdef PBL_MICROPHONE
     layer_mark_dirty(s_canvas_rain);
     //#endif
@@ -2246,7 +2347,7 @@ static void init(){
   //time_font =  ffont_create_from_resource(RESOURCE_ID_FONT_LIZ);
   time_font =  ffont_create_from_resource(RESOURCE_ID_FFONT_ERETCOM);
   time_font_small = ffont_create_from_resource(RESOURCE_ID_FFONT_ERET);
-  weather_font_massive = ffont_create_from_resource(RESOURCE_ID_FFONT_WEATHER);
+  //weather_font_massive = ffont_create_from_resource(RESOURCE_ID_FFONT_WEATHER);
 
   FontDayOfTheWeekShortName = fonts_load_custom_font(resource_get_handle(PBL_IF_ROUND_ELSE(RESOURCE_ID_ERET_36, RESOURCE_ID_ERET_36)));
   FontBTQTIcons = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_DRIPICONS_16));
