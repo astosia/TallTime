@@ -485,7 +485,7 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
       fctx_set_color_bias(&fctx,0);
 
       char CondToDraw[4];
-      snprintf(CondToDraw, sizeof(CondToDraw), "%s","\U0000F06B");//settings.iconnowstring);
+      snprintf(CondToDraw, sizeof(CondToDraw), "%s",settings.iconnowstring);//"\U0000F06B");
 
       icon_pos.x = INT_TO_FIXED(PBL_IF_ROUND_ELSE(38, 38+7) + h_adjust);
       icon_pos.y = INT_TO_FIXED(PBL_IF_ROUND_ELSE(90, 90+36-7)  + v_adjust);
