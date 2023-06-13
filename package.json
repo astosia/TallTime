@@ -107,6 +107,7 @@
             "PWSAPIKEY_User",
             "PWSStationID_User",
             "UsePWS",
+            "UseOWM",
             "RainTotalTodayPWS",
             "RainRatePWS",
             "PressurePWS",
@@ -130,8 +131,8 @@
         "resources": {
             "media": [
                 {
-                    "file": "data/Grammara-Normal.ffont",
-                    "name": "FFONT_GRAM",
+                    "file": "data/WeatherIcons-Regular.ffont",
+                    "name": "FFONT_WEATHER",
                     "targetPlatforms": null,
                     "type": "raw"
                 },
@@ -142,8 +143,8 @@
                     "type": "raw"
                 },
                 {
-                    "file": "data/EretRegular.ffont",
-                    "name": "FFONT_ERETRG",
+                    "file": "data/Eret.ffont",
+                    "name": "FFONT_ERET",
                     "targetPlatforms": null,
                     "type": "raw"
                 },
@@ -172,35 +173,12 @@
                     "name": "FONT_WEATHERICONS_32",
                     "targetPlatforms": null,
                     "type": "font"
-                },
-                {
-                    "file": "fonts/Johnston100",
-                    "name": "FONT_LIZ_27",
-                    "targetPlatforms": null,
-                    "type": "font"
-                },
-                {
-                    "file": "fonts/Johnston100",
-                    "name": "FONT_LIZ_18",
-                    "targetPlatforms": null,
-                    "type": "font"
-                },
-                {
-                    "file": "fonts/Johnston100",
-                    "name": "FONT_LIZ_12",
-                    "targetPlatforms": null,
-                    "type": "font"
-                },
-                {
-                    "file": "data/Johnston100W03-numbers.ffont",
-                    "name": "FONT_LIZ",
-                    "targetPlatforms": null,
-                    "type": "raw"
                 }
             ]
         },
         "sdkVersion": "3",
         "targetPlatforms": [
+            "aplite",
             "basalt",
             "chalk",
             "diorite"

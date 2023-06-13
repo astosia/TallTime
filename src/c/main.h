@@ -77,6 +77,7 @@ typedef struct ClaySettings {
   char* RainUnit;
   //#ifdef PBL_MICROPHONE
   bool UsePWS;
+  bool UseOWM;
   char windstringpws[10];
   char tempstringpws[6];
   char windiconnowstringpws[4];

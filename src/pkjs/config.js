@@ -15,7 +15,7 @@ module.exports = [
       {
         "type": "toggle",
         "messageKey": "HealthOff",
-        "label": "Switch off Steps",
+        "label": "Switch off Health & Steps",
         "defaultValue": true,
         "capabilities":["HEALTH"]
       },
@@ -34,7 +34,7 @@ module.exports = [
         "type": "color",
         "messageKey": "FrameColor2",
         "defaultValue": "0x000000",
-        "label": "Background Colour",
+        "label": "Time Background Colour",
         "allowGray":true
       },
       {
@@ -53,28 +53,14 @@ module.exports = [
         "type": "color",
         "messageKey": "HourColor",
         "defaultValue": "0xFFFFFF",
-        "label": "Hour Colour",
+        "label": "Time Colour",
         "allowGray":true
       },
       {
         "type": "color",
-        "messageKey": "MinColor",
+        "messageKey": "Text5Color",
         "defaultValue": "0xFFFFFF",
-        "label": "Minute Colour",
-        "allowGray":true
-      },
-      {
-        "type": "color",
-        "messageKey": "DateColor",
-        "defaultValue": "0xFFFFFF",
-        "label": "Date Colour",
-        "allowGray":true
-      },
-      {
-        "type": "color",
-        "messageKey": "Text3Color",
-        "defaultValue": "0xFFFFFF",
-        "label": "Day of the Week Colour",
+        "label": "Bluetooth Disconnect & Quiet Time Icons",
         "allowGray":true
       },
       {
@@ -93,7 +79,14 @@ module.exports = [
         "type": "color",
         "messageKey": "FrameColor",
         "defaultValue": "0x000000",
-        "label": "Background Colour",
+        "label": "Complications Background Colour",
+        "allowGray":true
+      },
+      {
+        "type": "color",
+        "messageKey": "Text3Color",
+        "defaultValue": "0xFFFFFF",
+        "label": "Date Colour",
         "allowGray":true
       },
       {
@@ -126,13 +119,6 @@ module.exports = [
       },
       {
         "type": "color",
-        "messageKey": "Text5Color",
-        "defaultValue": "0xFFFFFF",
-        "label": "BT & QT Colour",
-        "allowGray":true
-      },
-       {
-        "type": "color",
         "messageKey": "Text2Color",
         "defaultValue": "0xFFFFFF",
         "label": "Sunrise & Sunset Colour",
@@ -161,6 +147,13 @@ module.exports = [
               {
                 "type": "heading",
                 "defaultValue": "Weather settings"
+              },
+              {
+                "type": "toggle",
+                "messageKey": "UseOWM",
+                "label": "Show Weather data",
+                "defaultValue": false,
+                "capabilities":["MICROPHONE"]
               },
               {
                 "type": "slider",
@@ -263,30 +256,10 @@ module.exports = [
                 "type": "input",
                 "messageKey": "APIKEY_User",
                 "defaultValue": "",
-                "label": "API Key",
-                "description": "If left blank, the watch will attempt to request an api from your pmkey.xyz.  If you don't have an api key, weather data will not be displayed. Existing DarkSky APIs will work, but you can no longer sign up for a new one. You can still register for a free personal API key for <a href =https://home.openweathermap.org/users/sign_up/>OpenWeatherMap here</a>.",
+                "label": "OpenWeatherMap API Key",
+                "description": "If you don't have an api key, weather data will not be displayed. You can register for a free personal API key from <a href =https://home.openweathermap.org/users/sign_up/>OpenWeatherMap here</a>.",
                 "attributes": {
                   "placeholder": "Paste your API Key here"
-                }
-              },
-             {
-                "type": "input",
-                "messageKey": "EmailPMKEY",
-                "defaultValue": "",
-                "label": "pmkey.xyz User",
-                "description": "pmkey.xyz is a free service for Pebble users that allows you to safely store all your API keys in a single place. Check it out and sign up at <a href=https://www.pmkey.xyz/>pmkey.xyz</a>.",
-                "attributes": {
-                  "placeholder": "eg: jane.smith@pmkey.xyz",
-                  "type": "email"
-                }
-              },
-              {
-                "type": "input",
-                "messageKey": "PINPMKEY",
-                "defaultValue": "",
-                "label": "pmkey.xyz PIN",
-                "attributes": {
-                  "placeholder": "eg: 12345"
                 }
               },
             ]
@@ -296,15 +269,13 @@ module.exports = [
                 "items": [
                   {
                     "type": "heading",
-                    "defaultValue": "Personal Weather Station settings",
-                    "capabilities":["MICROPHONE"]
+                    "defaultValue": "Personal Weather Station settings"
                   },
                   {
                     "type": "toggle",
                     "messageKey": "UsePWS",
-                    "label": "Show Personal Weather Station data.",
-                    "defaultValue": false,
-                    "capabilities":["MICROPHONE"]
+                    "label": "Show Personal Weather Station data",
+                    "defaultValue": false
                   },
                   {
                   "type": "select",
@@ -340,11 +311,10 @@ module.exports = [
                      "messageKey": "PWSAPIKEY_User",
                      "defaultValue": "",
                      "label": "Personal Weather Station API Key",
-                     "description": "Use this to access your Personal Weather Station data via Weather Underground/The Weather Company. If left blank, the watch will attempt to request the Weather Underground API from your pmkey.xyz",
+                     "description": "Use this to access your Personal Weather Station data via Weather Underground/The Weather Company.",
                      "attributes": {
-                       "placeholder": "Paste PWS API Key, or blank if using pmkey"
-                     },
-                     "capabilities":["MICROPHONE"]
+                       "placeholder": "Paste PWS API Key"
+                     }
                    },
                    {
                       "type": "input",
@@ -355,7 +325,6 @@ module.exports = [
                       "attributes": {
                         "placeholder": "eg: KMAHANOV10"
                       },
-                      "capabilities":["MICROPHONE"]
                     },
                 ]
               },

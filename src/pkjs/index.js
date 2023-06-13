@@ -782,7 +782,7 @@ function suncalcinfo (pos){
       var windkph = Math.round(json.observations[0].metric_si.windSpeed * 3.6);
       var windms = Math.round(json.observations[0].metric_si.windSpeed);
       var windmph = Math.round(json.observations[0].metric_si.windSpeed * 2.2369362920544);
-        var windpws = String(windtousewu(windunits,windkph,windmph,windms,windkts))+windunits;
+        var windpws = String(windtousewu(windunits,windkph,windmph,windms,windkts));//+windunits;
         var windroundpws = String(windtousewu(windunits,windkph,windmph,windms,windkts));//+windunits;
       var winddegpws = String(json.observations[0].winddir);
         var winddir_numpws = owm_WindToId[winddegpws];
@@ -942,7 +942,7 @@ function locationSuccessDS(pos){
     var windkph = Math.round(json.currently.windSpeed * 3.6);
     var windms = Math.round(json.currently.windSpeed);
     var windmph = Math.round(json.currently.windSpeed * 2.2369362920544);
-    var wind = String(windtousewu(windunits,windkph,windmph,windms,windkts))+windunits;
+    var wind = String(windtousewu(windunits,windkph,windmph,windms,windkts));//+windunits;
     var windround = String(windtousewu(windunits,windkph,windmph,windms,windkts));//+windunits;
     var winddegds = String(json.currently.windBearing);
     var winddir_numds = owm_WindToId[winddegds];
@@ -962,12 +962,12 @@ function locationSuccessDS(pos){
                   var forecast_ave_wind_ms = Math.round(json.daily.data[0].windSpeed);
                   var forecast_wind_degds = String(json.daily.data[0].windBearing);
                   var forecast_wind_dir_numds = owm_WindToId[forecast_wind_degds];
-                  var forecast_ave_wind_ds = String(windtousewu(windunits,forecast_ave_wind_kph,forecast_ave_wind_mph,forecast_ave_wind_ms,forecast_ave_wind_kts))+windunits;
+                  var forecast_ave_wind_ds = String(windtousewu(windunits,forecast_ave_wind_kph,forecast_ave_wind_mph,forecast_ave_wind_ms,forecast_ave_wind_kts));//+windunits;
                   var forecast_ave_wind_ds_round = String(windtousewu(windunits,forecast_ave_wind_kph,forecast_ave_wind_mph,forecast_ave_wind_ms,forecast_ave_wind_kts));//+windunits;
                   var auxtimeds =new Date(json.currently.time*1000);
                   var dstime=auxtimeds.getHours()*100+auxtimeds.getMinutes();
                   var precip_chance_next_hour=Math.round(json.hourly.data[1].precipProbability *100);
-                  var rain_chance_next_hour=String(precip_chance_next_hour);//+'\x25';
+                  var rain_chance_next_hour=String(precip_chance_next_hour)+'\x25';
                   var icon_next_hour = ds_iconToId[json.hourly.data[1].icon];
                   //const response = json.miutely.data[0].precipIntensity;
                   //const result2 = response.json();typeof(json.minutely) == 'undefined'
@@ -1005,7 +1005,7 @@ function locationSuccessDS(pos){
                         var rainn60mm= String(Math.round(json.hourly.data[1].precipIntensity*100)/100);
                         var rainn60in= String(Math.round(json.hourly.data[1].precipIntensity*100/25.4)/100);
                         var rainn60 = String(raintouse(rainunits,rainn60mm,rainn60in));//+rainunits;//json.minutely[60].precipitation*10)/10;//var rainn60= Math.round(json.hourly.data[1].precipIntensity*10)/10;
-                        var rain_next_60 = String(rainn60)+' '+ String(rain_chance_next_hour);
+                        var rain_next_60 = String(rainn60)+'|'+ String(rain_chance_next_hour);
                       //var rainn60= Math.round(json.hourly.data[1].precipIntensity*100)/100;//json.minutely[60].precipitation*10)/10;//var rainn60= Math.round(json.hourly.data[1].precipIntensity*10)/10;
                       //var rain_next_60 = String(rainn60)+'|'+ String(rain_chance_next_hour);
                       var rain_available = String("naRain");
@@ -1029,7 +1029,7 @@ function locationSuccessDS(pos){
                         var rainn60mm= String(Math.round((rain0+rain5+rain10+rain15+rain20+rain25+rain30+rain35+rain40+rain45+rain50+rain55+rain60)/100/13*10)/10);//json.minutely[60].precipitation*10)/10;//var rainn60= Math.round(json.hourly.data[1].precipIntensity*10)/10;
                         var rainn60in= String(Math.round((rain0+rain5+rain10+rain15+rain20+rain25+rain30+rain35+rain40+rain45+rain50+rain55+rain60)/100/13*10/25.4)/10);//json.minutely[60].precipitation*10)/10;//var rainn60= Math.round(json.hourly.data[1].precipIntensity*10)/10;
                         var rainn60 = String(raintouse(rainunits,rainn60mm,rainn60in));
-                        var rain_next_60 = String(rainn60)+' '+ String(rain_chance_next_hour);
+                        var rain_next_60 = String(rainn60)+'|'+ String(rain_chance_next_hour);
 
                       var rain_available = String("Rain");
                       }
@@ -1234,12 +1234,12 @@ function locationSuccessOWM(pos){
     var forecast_ave_wind_ms = Math.round(json.daily[0].wind_speed);
     var forecast_wind_deg = String(json.daily[0].wind_deg);
     var forecast_wind_dir_num = owm_WindToId[forecast_wind_deg];
-    var forecast_ave_wind_owm = String(windtousewu(windunits,forecast_ave_wind_kph,forecast_ave_wind_mph,forecast_ave_wind_ms,forecast_ave_wind_kts))+windunits;
+    var forecast_ave_wind_owm = String(windtousewu(windunits,forecast_ave_wind_kph,forecast_ave_wind_mph,forecast_ave_wind_ms,forecast_ave_wind_kts));//+windunits;
     var forecast_ave_wind_owm_round = String(windtousewu(windunits,forecast_ave_wind_kph,forecast_ave_wind_mph,forecast_ave_wind_ms,forecast_ave_wind_kts));//+windunits;
     var auxtimeowm =new Date(json.current.dt*1000);
     var owmtime =auxtimeowm.getHours()*100+auxtimeowm.getMinutes();
     var precip_chance_next_hour=Math.round(json.hourly[1].pop *100);
-    var rain_chance_next_hour=String(precip_chance_next_hour);//+'\x25';
+    var rain_chance_next_hour=String(precip_chance_next_hour)+'\x25';
     var icon_next_hour = owm_iconToId[json.hourly[1].weather[0].icon];
     //var raintimeowm =new Date(json.minutely[0].dt*1000);
     var raintimetaken=auxtimeowm.getHours()*100+auxtimeowm.getMinutes();
@@ -1299,7 +1299,7 @@ function locationSuccessOWM(pos){
         var rainn60mm= String(Math.round(rain30)/100);//json.minutely[60].precipitation*10)/10;//var rainn60= Math.round(json.hourly.data[1].precipIntensity*10)/10;
         var rainn60in= String(Math.round(rain30/25.4)/100);
         var rainn60 = String(raintouse(rainunits,rainn60mm,rainn60in));
-        var rain_next_60 = String(rainn60)+' '+ String(rain_chance_next_hour);
+        var rain_next_60 = String(rainn60)+'|'+ String(rain_chance_next_hour);
         var rain_available = String("naRain");
         }
       else{
@@ -1320,7 +1320,7 @@ function locationSuccessOWM(pos){
           var rainn60mm= Math.round((rain0+rain5+rain10+rain15+rain20+rain25+rain30+rain35+rain40+rain45+rain50+rain55+rain60)/13/100*10)/10;//json.minutely[60].precipitation*10)/10;
           var rainn60in= Math.round((rain0+rain5+rain10+rain15+rain20+rain25+rain30+rain35+rain40+rain45+rain50+rain55+rain60)/13/100*10/25.4)/10;//json.minutely[60].precipitation*10)/10;
           var rainn60 = String(raintouse(rainunits,rainn60mm,rainn60in));
-          var rain_next_60 = String(rainn60)+' '+ String(rain_chance_next_hour);
+          var rain_next_60 = String(rainn60)+'|'+ String(rain_chance_next_hour);
 
         var rain_available = String("Rain");
       }
