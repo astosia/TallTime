@@ -1581,10 +1581,10 @@ static void layer_update_proc_bt(Layer * layer3, GContext * ctx3){
     GRect BTIconRect =
     (PBL_IF_ROUND_ELSE(
       GRect(90,4,24,20),
-      GRect(49,80+4,47,20)));
+      GRect(144-47,168-20,47,20)));
 
  graphics_context_set_text_color(ctx3, ColorSelect(settings.Text5Color, settings.Text5ColorN));
- graphics_draw_text(ctx3, "z", FontBTQTIcons, BTIconRect, GTextOverflowModeFill,GTextAlignmentCenter, NULL);
+ graphics_draw_text(ctx3, "z", FontBTQTIcons, BTIconRect, GTextOverflowModeFill,GTextAlignmentRight, NULL);
 
 }
 
@@ -1594,12 +1594,12 @@ static void layer_update_proc_qt(Layer * layer4, GContext * ctx4){
   GRect QTIconRect =
     (PBL_IF_ROUND_ELSE(
       GRect(90-24,4,24,20),
-      GRect(49,97+10+4,47,20)));
+      GRect(0,168-20,47,20)));
 
  quiet_time_icon();
 
  graphics_context_set_text_color(ctx4, ColorSelect(settings.Text5Color, settings.Text5ColorN));
- graphics_draw_text(ctx4, "\U0000E061", FontBTQTIcons, QTIconRect, GTextOverflowModeFill,GTextAlignmentCenter, NULL);
+ graphics_draw_text(ctx4, "\U0000E061", FontBTQTIcons, QTIconRect, GTextOverflowModeFill,GTextAlignmentLeft, NULL);
 
 }
 
