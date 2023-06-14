@@ -607,7 +607,7 @@ if (
       GRect bounds =
          (PBL_IF_ROUND_ELSE(
            GRect(90-16-29+4,4+101+1,32,32),
-           GRect(0,76,72,72)));
+           GRect(0,76+6-20,82,82)));
       GPoint center = grect_center_point(&bounds);
       const int16_t rain_bar_max_length = bounds.size.w/2;
       APP_LOG(APP_LOG_LEVEL_DEBUG, "rain_bar is %d",rain_bar_max_length);
@@ -1127,30 +1127,35 @@ else if (showWeather == 2){//show rain and moon
   GRect MoonRect =
       (PBL_IF_ROUND_ELSE(
         GRect(90-9-27+29-4,132-5+12-37+1-2,18+54,56),
-        GRect(72, 92, 72,50)));
+        GRect(72+6, 92-35, 72,50)));
 
         char MoonToDraw[4];
         snprintf(MoonToDraw, sizeof(MoonToDraw), "%s",settings.moonstring);
 
-  GRect PrecipRect =  //rain chance next hour
+  GRect PrecipChanceRect =  //rain chance next hour
       (PBL_IF_ROUND_ELSE(
         (GRect(0+20-1,24+2+109,90,30)),
-        (GRect(0,52,(144/2),39))));
+        (GRect(0+79,52+61-9,(144/2),39))));
+
+  GRect PrecipQtyRect =  //rain quantity next hour
+      (PBL_IF_ROUND_ELSE(
+        (GRect(0+20-1,24+2+109,90,30)),
+        (GRect(0+79,52+61-26-9+1,(144/2),39))));
 
   GRect StepsRect =  //temperature number
     (PBL_IF_ROUND_ELSE(
       (GRect(0+72+5,180-30-24-2+14,90,30)),
-      (GRect(72,52,(144/2),39))));
+      (GRect(72-76,136-7,(144/2),39))));
 
   GRect SunsetRect =
     (PBL_IF_ROUND_ELSE(
       (GRect(0+72+5,180-30-24-2+14,90,30)),
-      (GRect(72+5,136-7,(144/2),39))));
+      (GRect(72+5+9,136-7,(144/2)-5-9,39))));
 
   GRect SunsetIconRect =
      (PBL_IF_ROUND_ELSE(
        GRect(113+30,150-3-36,24,24),
-       GRect(72-12-8,136-7+16,144/6,38)));
+       GRect(72-12,136-7+16,144/6,38)));
 
        char SunsetIconToShow[4];
        snprintf(SunsetIconToShow, sizeof(SunsetIconToShow),  "%s", "\U0000F052");
@@ -1177,9 +1182,14 @@ else if (showWeather == 2){//show rain and moon
       //   graphics_draw_text(ctx, SunriseToDraw, FontTemp, SunriseRect, GTextOverflowModeWordWrap, PBL_IF_ROUND_ELSE(GTextAlignmentCenter,GTextAlignmentCenter), NULL);
          }
 
-        char precipToDraw[10];
+        char precipQtyToDraw[10];
         //snprintf(precipToDraw, sizeof(precipToDraw), "%s",settings.popstring);
-        snprintf(precipToDraw, sizeof(precipToDraw), "%s",settings.rainstring);
+        snprintf(precipQtyToDraw, sizeof(precipQtyToDraw), "%s",settings.rainstring);
+
+        char precipChanceToDraw[10];
+        //snprintf(precipToDraw, sizeof(precipToDraw), "%s",settings.popstring);
+        snprintf(precipChanceToDraw, sizeof(precipChanceToDraw), "%s",settings.popstring);
+
 
         char StepsToDraw[18];
         snprintf(StepsToDraw, sizeof(StepsToDraw), "%s", s_current_steps_buffer);
@@ -1193,7 +1203,12 @@ else if (showWeather == 2){//show rain and moon
 
   //precip chance
         graphics_context_set_text_color(ctx,ColorSelect(settings.Text8Color,settings.Text8ColorN));
-        graphics_draw_text(ctx, precipToDraw, FontTemp, PrecipRect, GTextOverflowModeFill, PBL_IF_ROUND_ELSE(GTextAlignmentCenter,GTextAlignmentCenter), NULL);
+        graphics_draw_text(ctx, precipQtyToDraw, FontTemp, PrecipQtyRect, GTextOverflowModeFill, PBL_IF_ROUND_ELSE(GTextAlignmentCenter,GTextAlignmentCenter), NULL);
+
+        graphics_context_set_text_color(ctx,ColorSelect(settings.Text8Color,settings.Text8ColorN));
+        graphics_draw_text(ctx, precipChanceToDraw, FontTemp, PrecipChanceRect, GTextOverflowModeFill, PBL_IF_ROUND_ELSE(GTextAlignmentCenter,GTextAlignmentCenter), NULL);
+
+
     //    graphics_draw_text(ctx, RainTimeToDraw, FontTempFore, PrecipRect, GTextOverflowModeFill, PBL_IF_ROUND_ELSE(GTextAlignmentCenter,GTextAlignmentCenter), NULL);
 
 }
@@ -1202,7 +1217,7 @@ else {//showWeather ==3 then show PWS data if available
   GRect RainRateRect =  //temperature number
       (PBL_IF_ROUND_ELSE(
         (GRect(99-4+27,133-8-37,61,14)),
-        (GRect(72,136-7,144/2,39))));
+        (GRect(72+2,136-7,144/2,39))));
 
   GRect PressureRect =  //rain chance next hour
       (PBL_IF_ROUND_ELSE(
@@ -1212,7 +1227,7 @@ else {//showWeather ==3 then show PWS data if available
   GRect WindKtsRect =  //windspeed number
        (PBL_IF_ROUND_ELSE(
        (GRect(94-115+2,26+6+2+56,90-4,30)),
-       (GRect(24-8,136-7,(144/4),39))));
+       (GRect(24-8+2,136-7,(144/4),39))));
 
  GRect WindDirNowRect =  //wind direction icon
      (PBL_IF_ROUND_ELSE(

@@ -1005,7 +1005,7 @@ function locationSuccessDS(pos){
                         var rainn60mm= String(Math.round(json.hourly.data[1].precipIntensity*100)/100);
                         var rainn60in= String(Math.round(json.hourly.data[1].precipIntensity*100/25.4)/100);
                         var rainn60 = String(raintouse(rainunits,rainn60mm,rainn60in));//+rainunits;//json.minutely[60].precipitation*10)/10;//var rainn60= Math.round(json.hourly.data[1].precipIntensity*10)/10;
-                        var rain_next_60 = String(rainn60)+'|'+ String(rain_chance_next_hour);
+                        var rain_next_60 = String(rainn60);//+'|'+ String(rain_chance_next_hour);
                       //var rainn60= Math.round(json.hourly.data[1].precipIntensity*100)/100;//json.minutely[60].precipitation*10)/10;//var rainn60= Math.round(json.hourly.data[1].precipIntensity*10)/10;
                       //var rain_next_60 = String(rainn60)+'|'+ String(rain_chance_next_hour);
                       var rain_available = String("naRain");
@@ -1029,7 +1029,7 @@ function locationSuccessDS(pos){
                         var rainn60mm= String(Math.round((rain0+rain5+rain10+rain15+rain20+rain25+rain30+rain35+rain40+rain45+rain50+rain55+rain60)/100/13*10)/10);//json.minutely[60].precipitation*10)/10;//var rainn60= Math.round(json.hourly.data[1].precipIntensity*10)/10;
                         var rainn60in= String(Math.round((rain0+rain5+rain10+rain15+rain20+rain25+rain30+rain35+rain40+rain45+rain50+rain55+rain60)/100/13*10/25.4)/10);//json.minutely[60].precipitation*10)/10;//var rainn60= Math.round(json.hourly.data[1].precipIntensity*10)/10;
                         var rainn60 = String(raintouse(rainunits,rainn60mm,rainn60in));
-                        var rain_next_60 = String(rainn60)+'|'+ String(rain_chance_next_hour);
+                        var rain_next_60 = String(rainn60);//+'|'+ String(rain_chance_next_hour);
 
                       var rain_available = String("Rain");
                       }
@@ -1299,7 +1299,7 @@ function locationSuccessOWM(pos){
         var rainn60mm= String(Math.round(rain30)/100);//json.minutely[60].precipitation*10)/10;//var rainn60= Math.round(json.hourly.data[1].precipIntensity*10)/10;
         var rainn60in= String(Math.round(rain30/25.4)/100);
         var rainn60 = String(raintouse(rainunits,rainn60mm,rainn60in));
-        var rain_next_60 = String(rainn60)+'|'+ String(rain_chance_next_hour);
+        var rain_next_60 = String(rainn60);//+'|'+ String(rain_chance_next_hour);
         var rain_available = String("naRain");
         }
       else{
@@ -1320,7 +1320,7 @@ function locationSuccessOWM(pos){
           var rainn60mm= Math.round((rain0+rain5+rain10+rain15+rain20+rain25+rain30+rain35+rain40+rain45+rain50+rain55+rain60)/13/100*10)/10;//json.minutely[60].precipitation*10)/10;
           var rainn60in= Math.round((rain0+rain5+rain10+rain15+rain20+rain25+rain30+rain35+rain40+rain45+rain50+rain55+rain60)/13/100*10/25.4)/10;//json.minutely[60].precipitation*10)/10;
           var rainn60 = String(raintouse(rainunits,rainn60mm,rainn60in));
-          var rain_next_60 = String(rainn60)+'|'+ String(rain_chance_next_hour);
+          var rain_next_60 = String(rainn60);//+'|'+ String(rain_chance_next_hour);
 
         var rain_available = String("Rain");
       }
