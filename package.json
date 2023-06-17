@@ -6,14 +6,14 @@
         "pebble-fctx-compiler": "^1.2.2"
     },
     "keywords": [],
-    "name": "TallTime",
+    "name": "TallTimeWeather",
     "pebble": {
         "capabilities": [
             "location",
             "configurable",
             "health"
         ],
-        "displayName": "TallTime",
+        "displayName": "Tall Time Weather",
         "enableMultiJS": true,
         "messageKeys": [
             "Back1Color",
@@ -172,9 +172,7 @@
         },
         "sdkVersion": "3",
         "targetPlatforms": [
-            "aplite",
             "basalt",
-            "chalk",
             "diorite"
         ],
         "uuid": "91a049b9-0532-4f64-9a75-cd75f61c96a6",

@@ -36,47 +36,23 @@ static int s_hours, s_minutes, s_weekday, s_day, s_month;// last one changed, s_
 static char* weather_conditions[] = {
     "\U0000F07B", // 'unknown': 0,
     "\U0000F00D", // 'clear': 1,
-    "\U0000F00D", // 'sunny': 2,
-    "\U0000F002", // 'partlycloudy': 3,
-    "\U0000F041", // 'mostlycloudy': 4,
-    "\U0000F00C", // 'mostlysunny': 5,
-    "\U0000F002", // 'partlysunny': 6,
-    "\U0000F013", // 'cloudy': 7,
-    "\U0000F019", // 'rain': 8,
-    "\U0000F01B", // 'snow': 9,
-    "\U0000F01D", // 'tstorms': 10,
-    "\U0000F0b5", // 'sleat': 11,
-    "\U0000F00A", // 'flurries': 12,
-    "\U0000F0b6", // 'hazy': 13,
-    "\U0000F01D", // 'chancetstorms': 14,
-    "\U0000F01B", // 'chancesnow': 15,
-    "\U0000F0b5", // 'chancesleat': 16,
-    "\U0000F008", // 'chancerain': 17,
-    "\U0000F01B", // 'chanceflurries': 18,
-    "\U0000F07B", // 'nt_unknown': 19,
-    "\U0000F02E", // 'nt_clear': 20,
-    "\U0000F02E", // 'nt_sunny': 21,
-    "\U0000F083", // 'nt_partlycloudy': 22,
-    "\U0000F086", // 'nt_mostlycloudy': 23,
-    "\U0000F081", // 'nt_mostlysunny': 24,
-    "\U0000F086", // 'nt_partlysunny': 25,
-    "\U0000F013", // 'nt_cloudy': 26,
-    "\U0000F019", // 'nt_rain': 27,
-    "\U0000F01B", // 'nt_snow': 28,
-    "\U0000F01D", // 'nt_tstorms': 29,
-    "\U0000F0b5", // 'nt_sleat': 30,
-    "\U0000F038", // 'nt_flurries': 31,
-    "\U0000F04A", // 'nt_hazy': 32,
-    "\U0000F01D", // 'nt_chancetstorms': 33,
-    "\U0000F038", // 'nt_chancesnow': 34,
-    "\U0000F0B3", // 'nt_chancesleat': 35,
-    "\U0000F036", // 'nt_chancerain': 36,
-    "\U0000F038", // 'nt_chanceflurries': 37,
-    "\U0000F003", // 'fog': 38,
-    "\U0000F04A", // 'nt_fog': 39,
-    "\U0000F050", // 'strong wind': 40,
-    "\U0000F015", // 'hail': 41,
-    "\U0000F056", // 'tornado': 42,
+    "\U0000F00C", // 'fewclouds': 2,
+    "\U0000F041", // 'scattered clouds': 3,
+    "\U0000F013", // 'brokenclouds': 4,
+    "\U0000F019", // 'shower rain': 5,
+    "\U0000F008", // 'rain': 6,
+    "\U0000F076", // 'snow': 7,
+    "\U0000F016", // 'tstorms': 8,
+    "\U0000F021", // 'mist': 9,
+    "\U0000F02E", // 'nt_clear': 11,
+    "\U0000F081", // 'nt_few clouds': 12,
+    "\U0000F086", // 'nt_scattered clouds': 13,
+    "\U0000F013", // 'nt_broken clouds' : 14
+    "\U0000F019", // 'nt_shower rain': 15,
+    "\U0000F036", // 'nt_rain': 16,
+    "\U0000F076", // 'nt_snow': 17,
+    "\U0000F016", // 'nt_tstorms': 18,
+    "\U0000F021", // 'nt_mist': 19,
 };
 
 static char* wind_direction[] = {
@@ -204,19 +180,6 @@ static GColor ColorSelect(GColor ColorDay, GColor ColorNight){
   }
 }
 
-/*void request_watchjs(){
-  //Starting loop at 0
-  s_loop = 0;
-  // Begin dictionary
-  DictionaryIterator * iter;
-  app_message_outbox_begin( & iter);
-  // Add a key-value pair
-  dict_write_uint8(iter, 0, 0);
-  // Send the message!
-  app_message_outbox_send();
-}*/
-
-
 ///BT Connection
 static void bluetooth_callback(bool connected){
   BTOn = connected;
@@ -246,14 +209,9 @@ static void quiet_time_icon () {
 }
 
 
-//static void onreconnection(bool before, bool now){
-  //APP_LOG(APP_LOG_LEVEL_DEBUG, "void before BTOn is %d", before);
-  //APP_LOG(APP_LOG_LEVEL_DEBUG, "void Now BT connection is %d", now);
-//}
 
 static void accel_tap_handler(AccelAxisType axis, int32_t direction) {
   // A tap event occured
-  //showWeather = !showWeather;
 
  if (showWeather ==3){
    showWeather = 0;
@@ -312,7 +270,6 @@ static void display_step_count() {
     snprintf(s_current_steps_buffer, sizeof(s_current_steps_buffer),
       "%d", hundreds2);
   }
-//  layer_set_text(s_step_layer, s_current_steps_buffer);
 
 }
 
@@ -371,6 +328,11 @@ void update_weather_area_layer(Layer *l, GContext* ctx) {
 
 void update_time_area_layer(Layer *l, GContext* ctx) {
   // check layer bounds
+
+  if (
+      (showWeather == 0 || !settings.UseOWM || (showWeather == 3 && !settings.UsePWS))
+    )
+    {
   #ifdef PBL_ROUND
      GRect bounds = layer_get_unobstructed_bounds(l);
      bounds = GRect(0, 0,bounds.size.w, bounds.size.h);
@@ -384,13 +346,8 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
   fctx_init_context(&fctx, ctx);
   fctx_set_color_bias(&fctx, 0);
 
-
-  if (
-      (showWeather == 0 || !settings.UseOWM || (showWeather == 3 && !settings.UsePWS))
-    )
-{
   fctx_set_fill_color(&fctx, ColorSelect(settings.HourColor, settings.HourColorN));
- #ifdef PBL_ROUND
+   #ifdef PBL_ROUND
     //int font_size = bounds.size.h * 0.55;
     int font_size = 172;
    #elif PBL_PLATFORM_APLITE
@@ -454,9 +411,22 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
         (showWeather == 1 && settings.UseOWM)
       )
   {
+    #ifdef PBL_ROUND
+       GRect bounds = layer_get_unobstructed_bounds(l);
+       bounds = GRect(0, 0,bounds.size.w, bounds.size.h);
+    #else
+       GRect bounds = GRect (0,0,144,80);
+       bounds = GRect(0,0,bounds.size.w,bounds.size.h);
+    #endif
+
+    FContext fctx;
+
+    fctx_init_context(&fctx, ctx);
+    fctx_set_color_bias(&fctx, 0);
+
       #ifdef PBL_ROUND
       //int font_size = bounds.size.h * 0.55;
-      int font_size = 81;
+      int font_size = 81;//81
      #elif PBL_PLATFORM_APLITE
       //int font_size = bounds.size.h * 0.65;
       int font_size = 81;
@@ -483,6 +453,7 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
       fctx_begin_fill(&fctx);
       fctx_set_text_em_height(&fctx, time_font_small, font_size);
       fctx_set_color_bias(&fctx,0);
+      fctx_set_fill_color(&fctx, ColorSelect(settings.HourColor, settings.HourColorN));
 
       char CondToDraw[4];
       snprintf(CondToDraw, sizeof(CondToDraw), "%s",settings.iconnowstring);//"\U0000F06B");
@@ -497,7 +468,7 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
 
 
         FPoint time_pos;
-        fctx_set_fill_color(&fctx, ColorSelect(settings.HourColor, settings.HourColorN));
+
         fctx_begin_fill(&fctx);
         fctx_set_text_em_height(&fctx, time_font_small, font_size);
         fctx_set_color_bias(&fctx,0);
@@ -535,6 +506,18 @@ void update_time_area_layer(Layer *l, GContext* ctx) {
     }
   else
   {
+    #ifdef PBL_ROUND
+       GRect bounds = layer_get_unobstructed_bounds(l);
+       bounds = GRect(0, 0,bounds.size.w, bounds.size.h);
+    #else
+       GRect bounds = GRect (0,0,144,80);
+       bounds = GRect(0,0,bounds.size.w,bounds.size.h);
+    #endif
+
+    FContext fctx;
+
+    fctx_init_context(&fctx, ctx);
+    fctx_set_color_bias(&fctx, 0);
     fctx_set_fill_color(&fctx, ColorSelect(settings.HourColor, settings.HourColorN));
     #ifdef PBL_ROUND
       //int font_size = bounds.size.h * 0.55;
@@ -2354,7 +2337,7 @@ static void init(){
 #ifdef PBL_MICROPHONE
   app_message_open(1024,1024);
 #else
-  app_message_open(512,512);
+  app_message_open(1024,1024);
 #endif
 
 // Load Fonts
